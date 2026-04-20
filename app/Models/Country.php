@@ -1,0 +1,21 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+class Country extends Model
+{
+    use HasFactory;
+    protected $fillable = ['name'];
+
+    public function cities()
+    {
+        return $this->hasMany(city::class);
+    }
+
+    public function users()
+    {
+        return $this->hasManyThrough(user::class,city::class);
+    }
+}
