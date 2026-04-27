@@ -11,9 +11,9 @@ class Review extends Model
     protected $table = 'Reviews';
     
     protected $fillable = [
-        'user_id',          // الشخص الذي قام بالتقييم (العميل عادةً)
-        'reviewable_id',    // معرف المشروع أو المستقل المقيم
-        'reviewable_type',  // نوع الموديل (Project أو Freelancer)
+        'user_id',        
+        'reviewable_id',   
+        'reviewable_type', 
         'rating',
         'comment',
     ];
