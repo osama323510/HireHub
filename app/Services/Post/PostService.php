@@ -19,9 +19,6 @@ public function getAll($data)
         ->when($data['budgetlimit'] ?? null, function ($query, $budget) {
                 return $query->budgetlimit($budget);
         })
-        ->whereHas('user', function($query) {
-                $query->where('role', 'client'); 
-        })
         ->with(['user', 'tags'])
         ->withCount('offers')
         ->withAvg('reviews', 'rating') 

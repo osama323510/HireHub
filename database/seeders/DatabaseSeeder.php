@@ -7,6 +7,7 @@ use App\Models\City;
 use App\Models\User;
 use App\Models\Freelancer;
 use App\Models\Skill;
+// use App\Models\Country;
 
 use App\Models\Freelancer_Skill;
 use App\Models\Post;
@@ -22,17 +23,16 @@ class DatabaseSeeder extends Seeder
 {
     use WithoutModelEvents;
 
-    /**
-     * Seed the application's database.
-     */
+
+
     public function run(): void
     {
 
-        country::factory(10)->create();
-        city::factory(10)->create();
-        User::factory(10)->create();
-
+     
         $this->call([
+        CountrySeeder::class,
+        CitySeeder::class,
+        UserSeeder::class,
         TagSeeder::class,
         SkillSeeder::class,
         FreelancerSeeder::class,

@@ -23,7 +23,7 @@ public function definition(): array
         'hour_price'  => fake()->randomFloat(2, 10, 100),
         'bio'         => fake()->paragraph(),   
         'is_active'   => fake()->boolean(),
-        'is_verified' => fake()->boolean(1),
+        'is_verified' => fake()->boolean(),
         'status'      => fake()->randomElement(['busy', 'available', 'unavailable']),
         'portfolio'   => [
             'projects' => [

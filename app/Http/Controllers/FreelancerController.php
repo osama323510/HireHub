@@ -20,10 +20,10 @@ class FreelancerController extends Controller
     }
     
 
-    public function infoWithId(Request $request,FreelancerWithIdService $service)
+    public function infoWithId($id,FreelancerWithIdService $service)
     {
 
-        $result=$service->infoWithId($request->id);
+        $result=$service->infoWithId($id);
         return new ShowFreelancerResource($result);
     }
 

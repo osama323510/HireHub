@@ -34,9 +34,9 @@ class PostFilterterRequest extends FormRequest
     public function rules(): array
     {
         return [
-        'newpost' => 'sometimes|boolean',
+        'newpost'        => 'sometimes|boolean',
         'thisMonth'      => 'sometimes|boolean',
-        'budgetlimit'       => 'sometimes|integer',
+        'budgetlimit'    => 'sometimes|integer',
         ];
     }
 }

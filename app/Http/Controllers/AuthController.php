@@ -8,7 +8,7 @@ use App\Services\User\AuthService;
 use App\Http\Requests\User\AuthRequest;
 use App\Http\Resources\User\UserResource;
 
-class AuthControler extends Controller
+class AuthController extends Controller
 {
     
     public function login(AuthRequest $request ,AuthService  $service)

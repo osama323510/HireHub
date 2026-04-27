@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-
+use App\Models\City;
 /**
  * @extends Factory<User>
  */
@@ -29,12 +29,11 @@ class UserFactory extends Factory
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' =>Hash::make('password'),
-            'remember_token' => Str::random(10),
             'image' => fake()->imageUrl(),
             'lastname' => fake()->lastName(),
             'role' => fake()->randomElement(['freelancer', 'client']),
             'address' => fake()->address(),
-            'city_id' =>\App\Models\City::inRandomOrder()->first()->id,
+            'city_id' =>City::inRandomOrder()->first()->id,
         ];
     }
 

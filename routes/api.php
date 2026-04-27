@@ -4,51 +4,53 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FreelancerController;
 use App\Http\Controllers\PostController;
-use App\Http\Controllers\OfferControler;
-use App\Http\Controllers\AuthControler;
-use App\Http\Controllers\OwnerControler;
+use App\Http\Controllers\OfferController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\OwnerController;
+use App\Http\Controllers\ReviewController;
 
 
-route::post('/UpdateProfile',[FreelancerController::class,'update'])->middleware('auth:sanctum');
-Route::post('/login', [AuthControler::class, 'login']);
+Route::post('/login', [AuthController::class, 'login']);
 
 
-
-
-
-route::get('/posts', [PostController::class, 'index']);
-
-route::get('/post/{id}',[PostController::class, 'show']);
 
 Route::middleware(['auth:sanctum','is_client'])->group(function () {
+
     route::post('/CreatPost',[PostController::class,'create']);
+
+	route::get('/accept/{id}',[OfferController::class,'accept']);
+
+	route::get('/Reject/{id}',[OfferController::class,'Reject']);
 });
-
-
-
-route::get('/freelancers', [FreelancerController::class, 'info']); 
-route::get('/freelancer/{id}', [FreelancerController::class, 'infoWithId']); 
-
-
-
-
 
 
 Route::middleware(['auth:sanctum','is_freelancer'])->group(function () {
     
-    route::post('/CreateOffer',[OfferControler::class,'create']);
+    route::post('/CreateOffer',[OfferController::class,'create']);
+
+	route::post('/UpdateProfile',[FreelancerController::class,'update'])->middleware('auth:sanctum');
+
 });
 
-route::get('/accept/{id}',[OfferControler::class,'accept']);
-route::get('/Reject/{id}',[OfferControler::class,'Reject']);
+
+Route::middleware('auth:sanctum')->group(function () {
+		
+	route::post('/freelancers', [FreelancerController::class, 'info']); 
+
+	route::get('/freelancer/{id}', [FreelancerController::class, 'infoWithId']); 
+
+	route::post('/posts', [PostController::class, 'index']);
+
+	route::get('/post/{id}',[PostController::class, 'show']);
+
+	route::get('/offer/{id}',[OfferController::class,'show']);
 
 
-route::get('/offer/{id}',[OfferControler::class,'show']);
+
+	route::get('/Panel',[OwnerController::class, 'Panel']);
 
 
-route::get('/Panel',[OwnerControler::class, 'Panel']);
-
-
+});
 
 
 

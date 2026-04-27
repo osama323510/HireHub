@@ -17,7 +17,7 @@ class CreatePostService
     public function create($data)
     {
         $post = Post::create([
-            'user_id'     => auth()->id(),
+            'user_id'     => Auth::id(),
             'title'       => $data['title'],
             'description' => $data['description'],
             'price'       => $data['price'],

@@ -22,7 +22,6 @@ public function definition(): array
         
         'freelancer_id' => \App\Models\Freelancer::factory(),
         'post_id'       => \App\Models\Post::factory(),
-        
         'offer_price'   => fake()->numberBetween(500, 3000),
         'description'   => fake()->paragraph(),
         'days'          => fake()->numberBetween(1, 10),

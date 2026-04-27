@@ -34,8 +34,8 @@ class CreatePostRequest extends FormRequest
 public function rules(): array
 {
     return [
-        'title' => 'required|string|min:10|max:255',new ForbiddenWords(),
-        'description' => 'required|string|min:50',new ForbiddenWords(),   
+        'title' => ['required','string','min:10','max:255',new ForbiddenWords()],
+        'description' => ['required','string','min:50',new ForbiddenWords()],   
         'budget' => 'required|in:fixed,hourly',     
         'price' => 'required|numeric|min:1',       
         'deadline' => 'required|date|after:today',   

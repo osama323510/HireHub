@@ -18,21 +18,23 @@ class AcceptOfferService
     {
 
         $acceptedOffer = Offer::findOrFail($id);
-        if($acceptedOffer->status == 'accepted') return 0;
+
+        if(!$acceptedOffer) return "the offer is not found";
+        elseif($acceptedOffer->status == 'accepted') return "you accept the offer befor";
+        elseif($acceptedOffer->status == 'rejected') return "you can not accept offer which is rejected";
+
 
         $postId = $acceptedOffer->post_id;
+
+        $acceptedOffer->update(['status' => 'accepted']);
+        
+        $acceptedOffer->post->update(['status' => 'in_progress']);
 
         Offer::where('post_id', $postId)
             ->update(['status' => 'rejected']);
 
-        
-        $acceptedOffer->update(['status' => 'accepted']);
-
-        $acceptedOffer->post->update(['status' => 'in_progress']);
-
-
         $this->notification->send(
-            $acceptedOffer->user_id, 
+            $acceptedOffer->freelancer->user->email, 
             " your offer is accepted "
             );
 

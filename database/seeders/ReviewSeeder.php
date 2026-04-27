@@ -16,19 +16,26 @@ class ReviewSeeder extends Seeder
     public function run(): void
     {
         
-        $reviewables = [
-            Freelancer::class,
-            Post::class, 
-        ];
-
+        for ($i = 0; $i < 20; $i++) {
+        $reviewables = [Freelancer::class, Post::class];
         $type = fake()->randomElement($reviewables);
-        $reviewable = $type::inRandomOrder()->first();
-        Review::factory()->count(10)->create([
-            'reviewable_id'   => $reviewable->id,
+        if ($type == Freelancer::class) {
+            $model = Freelancer::inRandomOrder()->first() ?? Freelancer::factory()->create();
+        } else {
+            $model = Post::where('status', 'closed')->inRandomOrder()->first() 
+                    ?? Post::factory()->create(['status' => 'closed']);
+        }
+        Review::factory()->create([
+            'reviewable_id'   => $model->id,
             'reviewable_type' => $type,
         ]);
+    }
 
 
 
     }
 }
+
+
+
+

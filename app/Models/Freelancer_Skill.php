@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-class Creelancer_skill extends Model
+class Freelancer_skill extends Model
 {
     use HasFactory;
     protected $table = 'Freelancers_Skills';

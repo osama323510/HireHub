@@ -34,15 +34,16 @@ protected function prepareForValidation(): void
 public function rules(): array
     {
         return [
-        'id'=>'integer|min:1',
+        'id'         => 'integer|min:1',
         'name'       => 'sometimes|string|max:225',
         'lastname'   => 'sometimes|string|max:255',
-        'email'      => 'sometimes|email|unique:users,email,' . auth()->id(),
+        'email'      => 'sometimes|email|unique:users,email',
         'password'   => 'sometimes|string|min:8',
         'phone'      => 'sometimes|string|max:12|regex:/^963[0-9]{9}$/',
         'hour_price' => 'sometimes|numeric',
         'bio'        => 'sometimes|string|max:500',
         'portfolio'  => 'sometimes|url',
+        'status'     => 'sometimes|string|in:available,unavailable,busy',
         'image'      => 'sometimes|string',
         'address'    => 'sometimes|string',
         'skills'         => 'sometimes|array',

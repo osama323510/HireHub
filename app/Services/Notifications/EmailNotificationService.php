@@ -13,7 +13,7 @@ class EmailNotificationService implements NotificationServiceInterface
         
     }
 
-    public function send($userId, $message) {
-        Log::info("Sending Email to User $userId: $message");
+    public function send($email, $message) {
+        Log::info("Sending Email to User $email: $message");
     }
 }

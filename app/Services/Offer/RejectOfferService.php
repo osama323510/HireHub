@@ -17,12 +17,15 @@ class RejectOfferService
     public function handleReject($id)
     {
         $offer = Offer::findOrFail($id);
-        if($offer->status == 'rejected' ) return 0;
-        
+
+        if(!$offer) return "the offer is not found";
+        elseif($offer->status == 'accepted') return "you can not reject offer which is accepted";
+        elseif($offer->status == 'rejected') return "you reject the offer befor";
+
         $offer->update(['status' => 'rejected']);
 
         $this->notification->send(
-            $offer->freelancer->user->id, 
+            $offer->freelancer->user->email, 
             "your offer is Rejected  : " . $offer->post->title
         );
 

@@ -30,9 +30,9 @@ class PostController extends Controller
     }
 
 
-    public function show(Request $request,ShowPostService $service)
+    public function show($id,ShowPostService $service)
     {
-        $result = $service->show($request->id);
+        $result = $service->show($id);
         if(!$result)
         {
             return response()->json([

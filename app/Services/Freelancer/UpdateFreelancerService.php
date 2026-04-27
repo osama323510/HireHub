@@ -3,6 +3,7 @@
 namespace App\Services\Freelancer;
 use App\Models\Freelancer;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class UpdateFreelancerService
 {
@@ -15,15 +16,14 @@ class UpdateFreelancerService
     }
     public function update(array $data)
     {
-        
+        return DB::transaction(function () use ($data) {
         $freelancer = Freelancer::with('user')->findOrFail($data['id']);
-        
         
         $freelancer->user->update([
             'name'     => $data['name'] ?? $freelancer->user->name,
             'lastname' => $data['lastname'] ?? $freelancer->user->lastname,
-            'phone'    => $data['phone'] ?? $freelancer->user->phone,
             'address'  => $data['address'] ?? $freelancer->user->address,
+            'image'      => $data['image'] ?? $freelancer->user->image,
         ]);
 
         $currentPortfolio = $freelancer->portfolio ?? [];
@@ -37,7 +37,8 @@ class UpdateFreelancerService
             'hour_price' => $data['hour_price'] ?? $freelancer->hour_price,
             'bio'        => $data['bio'] ?? $freelancer->bio,
             'portfolio'  => $currentPortfolio,
-            'image'      => $data['image'] ?? $freelancer->image,
+            'phone'    => $data['phone'] ?? $freelancer->phone,
+            'status'   =>$data['status']??$freelancer->status,
         ]);
 
         
@@ -53,5 +54,6 @@ class UpdateFreelancerService
     }
 
     return $freelancer->load(['skills', 'user']);
+        });
     }
 }

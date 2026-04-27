@@ -24,7 +24,7 @@ class CreateOfferRequest extends FormRequest
     {
         return [
             'offer_price'=>'numeric|decimal:0,2|required|min:1',
-            'description'=>"string",new ForbiddenWords,
+            'description'=>["string",new ForbiddenWords],
             'days'=>"integer|required|min:2",
             'post_id'=>'required',
             

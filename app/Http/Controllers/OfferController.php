@@ -12,15 +12,15 @@ use App\Models\Post;
 use App\Services\Offer\AcceptOfferService;
 use App\Services\Offer\RejectOfferService;
 
-class OfferControler extends Controller
+class OfferController extends Controller
 {
 
 
 
-    public function show(Request $request,OfferService $service)
+    public function show($id,OfferService $service)
     {
 
-        $offer=$service->getOfferById($request->id);
+        $offer=$service->getOfferById($id);
         return new OfferResource($offer);
     }
 
@@ -34,11 +34,11 @@ class OfferControler extends Controller
 
 
 
-    public function accept(Request $request, AcceptOfferService $service)
+    public function accept($id, AcceptOfferService $service)
     {
-        $result = $service->handleAccept($request->id);
+        $result = $service->handleAccept($id);
         if (!$result) {
-            return response()->json(['message' => 'failed to accept'], 500);
+            return response()->json(['message' =>$result], 500);
         }
         return response()->json([
             'status'  => 'success',
@@ -47,12 +47,12 @@ class OfferControler extends Controller
     }
 
 
-    public function Reject(Request $request, RejectOfferService $service)
+    public function Reject($id, RejectOfferService $service)
     {
-        $result = $service->handleReject($request->id);
+        $result = $service->handleReject($id);
 
         if (!$result) {
-            return response()->json(['message' => 'failed to Reject'], 500);
+            return response()->json(['message' =>$result], 500);
         }
 
         return response()->json([

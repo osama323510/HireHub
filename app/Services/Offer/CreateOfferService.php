@@ -9,6 +9,7 @@ class CreateOfferService
 {
 
     protected $notification;
+
     public function __construct(NotificationServiceInterface $notification)
     {
         $this->notification = $notification;
@@ -18,29 +19,10 @@ class CreateOfferService
     {
     $user = Auth::user();
     $freelancerId = $user->freelancer->id;
-
-    
-
     $post = Post::findorfail($data['post_id']);
     
-    $alreadyOffered = Offer::where('post_id', $data['post_id'])
-                        ->where('freelancer_id', $freelancerId)
-                        ->exists();
 
-    if ($alreadyOffered) {
-        
-        throw new \Illuminate\Validation\ValidationException(
-        validator(data: [], rules: []), 
-        response()->json(['message' => "You have already submitted an offer for this post."], 422)
-    );
-    }
-
-    if (!$post || $post->status != "open") {
-        throw new \Illuminate\Validation\ValidationException(
-        validator(data: [], rules: []), 
-        response()->json(['message' => "the post in colsed now."], 422)
-    );
-    }
+    $this->ensureFreelancerCanOffer($post,$freelancerId);
     
     $offer=Offer::create([
         'freelancer_id' => $freelancerId,
@@ -50,9 +32,32 @@ class CreateOfferService
         'days'          => $data['days'],
     ]);
 
-    $this->notification->send($post->user->id,"new offer ");
+    
+
+    $this->notification->send($offer->freelancer->user->email,"new offer ");
     
     return $offer;
 
+    }
+
+
+    protected function ensureFreelancerCanOffer(Post $post, $freelancerId)
+    {
+        if ($post->status !== 'open') {
+        throw ValidationException::withMessages([
+        'message' => ['You can not make an offer on this post.'],
+            ]);
+        }
+
+        $exists = Offer::where('post_id', $post->id)
+                        ->where('freelancer_id', $freelancerId)
+                        ->exists();
+
+        if ($exists) {
+        throw ValidationException::withMessages([
+        'message' => ['You have already submitted an offer.'],
+            ]);
+            
+        }
     }
 }
