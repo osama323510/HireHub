@@ -4,5 +4,5 @@ namespace App\Interfaces;
 
 interface NotificationServiceInterface
 {
-    public function send($userId, $message);
+    public function send($email, $message);
 }
