@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->unique()->constrained()->onDelete('cascade');
             $table->string('phone')->nullable();;
             $table->decimal('hour_price', 8, 2);
+            $table->decimal('rating',3,1)->default(0);
             $table->text('bio')->nullable();;
             $table->boolean('is_active')->default(false);
             $table->boolean('is_verified')->default(false);

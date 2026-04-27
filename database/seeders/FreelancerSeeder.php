@@ -21,7 +21,7 @@ public function run(): void
 
     if($usersWithoutProfile->isEmpty())
         {
-            $usersWithoutProfile =user::factory(5)->create([
+            $usersWithoutProfile =user::factory(10)->create([
                 'role' =>'freelancer',
             ]);
         }

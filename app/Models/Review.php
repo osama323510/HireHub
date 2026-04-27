@@ -10,12 +10,12 @@ class Review extends Model
     use HasFactory;
     protected $table = 'Reviews';
     
-    protected $fillable = [
-        'user_id',          // الشخص الذي قام بالتقييم (العميل عادةً)
-        'reviewable_id',    // معرف المشروع أو المستقل المقيم
-        'reviewable_type',  // نوع الموديل (Project أو Freelancer)
+protected $fillable = [
+        'user_id',
+        'comment', // تأكد من كتابتها comment وليس commet كما في الكود السابق
         'rating',
-        'comment',
+        'reviewable_id',
+        'reviewable_type'
     ];
 
     protected function casts(): array

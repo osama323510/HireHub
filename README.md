@@ -63,7 +63,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::middleware(['auth:sanctum','is_client'])->group(function () {
 
     route::post('/CreatPost',[PostController::class,'create']);
-    the id is from 1 to 5
+
     {
     "title": "Build a Laravel API for HireHub Mobile App",
     "description": "We are looking for a backend engineer to develop a secure and scalable RESTful API. The project requires expertise in Laravel 11, Service Patterns, and Sanctum authentication. Please ensure clean code practices.",
@@ -119,29 +119,30 @@ Route::middleware(['auth:sanctum','is_freelancer'])->group(function () {
 
 Route::middleware('auth:sanctum')->group(function () {
 		
-	route::post('/freelancers', [FreelancerController::class, 'info']); 
-    this code is optinal
-    {
-    "sort_by_rating": true,
-    "available": true,
-    "verified": true
-    }
+	route::get('/freelancers', [FreelancerController::class, 'info']); 
+
+    
+    this return by default the available and verified freelancer
 
 	route::get('/freelancer/{id}', [FreelancerController::class, 'infoWithId']); 
 
-	route::post('/posts', [PostController::class, 'index']);
-    this input is optinal for filter
-    {
-    "newpost": true,
-    "thisMonth": true,
-    "budgetlimit": 1000
-    }
+	route::get('/posts', [PostController::class, 'index']);
+    this return by default the opsen post 
+
 
 	route::get('/post/{id}',[PostController::class, 'show']);
 
 	route::get('/offer/{id}',[OfferController::class,'show']);
 
 	route::get('/Panel',[OwnerController::class, 'Panel']);
+
+    route::post('/createreview',[ReviewController::class,'newcomment']);
+    {
+    "comment": "عمل رائع وسرعة في التنفيذ",
+    "rating": 4,
+    "reviewable_id": 1,
+    "reviewable_type": "freelancer" 
+    }
 
 
 });
@@ -202,6 +203,20 @@ select * from `users` where `users`.`id` = 1 limit 1	0.61ms	1s ago
 select * from `personal_access_tokens` where `personal_access_tokens`.`id` = '1' limit 1
 
 
+cache :
+the api_endpoint table registers the duration of executing  any endpoint in the server
+
+to show all post without cache  the duration is :304 ms
+to show all post without cache  the duration is  193 ms
+
+
+
+
+use observer 
+    to clean the cache on update freelancer table 
+    to clean the cache on create new post 
+
+send job to hande update and send email when accept or reject offer
 
 
 
@@ -225,6 +240,8 @@ select * from `personal_access_tokens` where `personal_access_tokens`.`id` = '1'
 
         composer dump-autoload
 
+5 Run Queue Worker:
+        php artisan queue:work
 
 💡 Developer Notes
 Data models are engineered with advanced Attribute Casting and Accessors. This includes automatic status calculation for project deadlines (e.g., "Expired" or "Active for X days") and standardized currency formatting for price fields directly at the model level.

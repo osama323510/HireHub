@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('freelancer_id')->constrained()->onDelete('cascade');
             $table->foreignId('post_id')->constrained()->onDelete('cascade');
             $table->decimal('offer_price', 8, 2);
-            $table->string('description'); 
+            $table->text('description'); 
             $table->integer('days');
             $table->enum('status', ['pending', 'accepted', 'rejected'])->default('pending');
             $table->timestamps();

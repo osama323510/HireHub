@@ -2,32 +2,25 @@
 
 namespace App\Services\Freelancer;
 use App\Models\Freelancer;
-
+use Illuminate\Support\Facades\Cache;
 class FreelancerService
 {
-    public function getFreelancerInfo(array $filters = [])
+public function getFreelancerInfo()
     {
-        return Freelancer::query()
-            
-            ->when(isset($filters['verified']), function ($query) {
-                $query->verifiedAndActive();
-            })
 
-            ->when(isset($filters['available']), function ($query) {
-                $query->available();
-            })
-
-            ->withAvg('reviews', 'rating')
-            ->with([
-                'user', 
-                'skills' => fn($q) => $q->withPivot('years_of_experience')
-            ])
+        return Cache::remember('freelancer:available', 3600, function () {
             
-            ->when(isset($filters['sort_by_rating']), 
-                fn($q) => $q->orderByRating(), 
-                fn($q) => $q->latest()
-            )
-            ->paginate($filters['per_page'] ?? 10);
+            return  Freelancer::query()
+                ->verifiedAndActive()
+                ->available()
+                ->with([
+                    'user', 
+                    'skills' => fn($q) => $q->withPivot('years_of_experience')
+                ])
+                ->get();
+        });
+
+
     }
 }
 

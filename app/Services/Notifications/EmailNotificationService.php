@@ -2,7 +2,11 @@
 
 namespace App\Services\Notifications;
 use App\Interfaces\NotificationServiceInterface;
+use App\Jobs\MailHandl;
+use App\Mail\TestEmail;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+
 class EmailNotificationService implements NotificationServiceInterface
 {
     /**
@@ -14,6 +18,7 @@ class EmailNotificationService implements NotificationServiceInterface
     }
 
     public function send($email, $message) {
-        Log::info("Sending Email to User $email: $message");
+
+        MailHandl::dispatch($email,$message);
     }
 }

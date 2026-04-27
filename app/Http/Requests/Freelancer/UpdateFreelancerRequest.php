@@ -21,20 +21,20 @@ class UpdateFreelancerRequest extends FormRequest
      * @return array<string, ValidationRule|array<mixed>|string>
      */
 
-protected function prepareForValidation(): void
-{
-    $this->merge([
-        'name'       => trim($this->title),
-        'lastname' => trim($this->description),
-        'email' => trim($this->email),
-        'address' => trim($this->address),
-    ]);
-}
+// protected function prepareForValidation(): void
+// {
+//     $this->merge([
+//         'name'       => trim($this->title),
+//         'lastname' => trim($this->description),
+//         'email' => trim($this->email),
+//         'address' => trim($this->address),
+//     ]);
+// }
 
 public function rules(): array
     {
         return [
-        'id'         => 'integer|min:1',
+        'id'=>'integer|min:1',
         'name'       => 'sometimes|string|max:225',
         'lastname'   => 'sometimes|string|max:255',
         'email'      => 'sometimes|email|unique:users,email',

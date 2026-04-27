@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Freelancer;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Skill extends Model
 {
@@ -21,6 +22,6 @@ class Skill extends Model
 
     public function freelanser()
     {
-        return $this->belongsToMany(freelanser::class)->withPivot('years_of_experience');
+        return $this->belongsToMany(Freelancer::class)->withPivot('years_of_experience');
     }
 }

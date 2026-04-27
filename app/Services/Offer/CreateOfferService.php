@@ -5,11 +5,12 @@ use App\Models\Offer;
 use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
 use App\Interfaces\NotificationServiceInterface;
+use App\Jobs\MailHandl;
+use Illuminate\Validation\ValidationException;
 class CreateOfferService
 {
 
     protected $notification;
-
     public function __construct(NotificationServiceInterface $notification)
     {
         $this->notification = $notification;
@@ -19,9 +20,9 @@ class CreateOfferService
     {
     $user = Auth::user();
     $freelancerId = $user->freelancer->id;
+
     $post = Post::findorfail($data['post_id']);
     
-
     $this->ensureFreelancerCanOffer($post,$freelancerId);
     
     $offer=Offer::create([
@@ -31,15 +32,10 @@ class CreateOfferService
         'description'   => $data['description'],
         'days'          => $data['days'],
     ]);
-
-    
-
-    $this->notification->send($offer->freelancer->user->email,"new offer ");
-    
+    $this->notification->send($offer->freelancer->user->email,'you created new offer');
     return $offer;
 
     }
-
 
     protected function ensureFreelancerCanOffer(Post $post, $freelancerId)
     {

@@ -18,7 +18,7 @@ public function toArray(Request $request): array
         'id'      => $this->id,
         'name'    => $this->user->full_name(), 
         'image'   => $this->user->avatarUrl,
-        'rating'  => $this->rate,
+        'rating'  => $this->rating??0,
         'joined'  => $this->user->joinedDate,
 
     ];

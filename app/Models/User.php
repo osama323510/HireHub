@@ -84,7 +84,7 @@ class User extends Authenticatable
 
     public function full_name()
     {
-        return $this->name.$this->lastname;
+        return $this->name.' '.$this->lastname;
     }
     
     protected function joinedDate():Attribute

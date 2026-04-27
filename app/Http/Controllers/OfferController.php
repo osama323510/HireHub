@@ -37,12 +37,11 @@ class OfferController extends Controller
     public function accept($id, AcceptOfferService $service)
     {
         $result = $service->handleAccept($id);
-        if (!$result) {
+        if ($result) {
             return response()->json(['message' =>$result], 500);
         }
         return response()->json([
-            'status'  => 'success',
-            'message' => 'the offer is accepted',
+            'message' =>"you request is being procciicng"
         ]);
     }
 
@@ -51,7 +50,7 @@ class OfferController extends Controller
     {
         $result = $service->handleReject($id);
 
-        if (!$result) {
+        if ($result) {
             return response()->json(['message' =>$result], 500);
         }
 

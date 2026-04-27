@@ -10,12 +10,17 @@ use App\Services\Freelancer\FreelancerWithIdService;
 use App\Http\Requests\Freelancer\FreelancerFilterterRequest;
 use App\Http\Requests\Freelancer\UpdateFreelancerRequest;
 
+
+use App\Models\Freelancer ;
+use App\Services\Frelancer\ChangeStatusService;
+use GrahamCampbell\ResultType\Success;
+
 class FreelancerController extends Controller
 {
     
-    public function info(FreelancerFilterterRequest $request,FreelancerService $servie)
+    public function info(FreelancerService $servie)
     {
-        $freelancers = $servie->getFreelancerInfo($request->validated());
+        $freelancers = $servie->getFreelancerInfo();
         return FreelancerResource::collection($freelancers);
     }
     
@@ -26,6 +31,7 @@ class FreelancerController extends Controller
         $result=$service->infoWithId($id);
         return new ShowFreelancerResource($result);
     }
+
 
     public function update(UpdateFreelancerRequest $request,UpdateFreelancerService $service)
     {

@@ -4,6 +4,7 @@ namespace App\Services\Offer;
 
 use App\Models\Offer;
 use App\Interfaces\NotificationServiceInterface;
+use App\Jobs\MailHandl;
 
 class RejectOfferService
 {
@@ -21,13 +22,10 @@ class RejectOfferService
         if(!$offer) return "the offer is not found";
         elseif($offer->status == 'accepted') return "you can not reject offer which is accepted";
         elseif($offer->status == 'rejected') return "you reject the offer befor";
-
+        
         $offer->update(['status' => 'rejected']);
 
-        $this->notification->send(
-            $offer->freelancer->user->email, 
-            "your offer is Rejected  : " . $offer->post->title
-        );
+        $this->notification->send($offer->freelancer->user->email,"you offer is Rejected");
 
         return $offer;
     }

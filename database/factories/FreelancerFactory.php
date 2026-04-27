@@ -22,9 +22,10 @@ public function definition(): array
         'phone'       => fake()->numerify('9639########'),
         'hour_price'  => fake()->randomFloat(2, 10, 100),
         'bio'         => fake()->paragraph(),   
-        'is_active'   => fake()->boolean(),
-        'is_verified' => fake()->boolean(),
-        'status'      => fake()->randomElement(['busy', 'available', 'unavailable']),
+        'rating'      =>0,
+        'is_active'   => 1,
+        'is_verified' => 1,
+        'status'      => 'available',
         'portfolio'   => [
             'projects' => [
                 'title'       => fake()->sentence(),

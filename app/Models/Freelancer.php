@@ -4,8 +4,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Observers\FreelancerObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+
+
+#[ObservedBy([FreelancerObserver::class])]
 class Freelancer extends Model
 {
     use HasFactory;
@@ -21,6 +25,7 @@ class Freelancer extends Model
         'is_active',
         'is_verified',
         'portfolio',
+        'rating'
     ];
 
     protected function casts(): array
@@ -132,7 +137,7 @@ class Freelancer extends Model
 
     public function scopeVerifiedAndActive($query)
     {
-        return $query->where('is_verified', true)->where('is_active',true);
+        return $query->where('is_verified',true)->where('is_active',true);
     }
 
     public function scopeAvailable($query)

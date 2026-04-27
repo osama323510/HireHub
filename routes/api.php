@@ -35,17 +35,17 @@ Route::middleware(['auth:sanctum','is_freelancer'])->group(function () {
 
 Route::middleware('auth:sanctum')->group(function () {
 		
-	route::post('/freelancers', [FreelancerController::class, 'info']); 
+	route::get('/freelancers', [FreelancerController::class, 'info']); 
 
 	route::get('/freelancer/{id}', [FreelancerController::class, 'infoWithId']); 
 
-	route::post('/posts', [PostController::class, 'index']);
+	route::get('/posts', [PostController::class, 'index']);
 
 	route::get('/post/{id}',[PostController::class, 'show']);
 
 	route::get('/offer/{id}',[OfferController::class,'show']);
 
-
+	route::post('/createreview',[ReviewController::class,'newcomment']);
 
 	route::get('/Panel',[OwnerController::class, 'Panel']);
 
@@ -59,23 +59,4 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
 
-
-
-		// "post_id":1,
-		// "offer_price":500,
-		// "description":"sdasasdsadasdasdasdasdasdasd",
-		// "days":5
-	
-
-        // 	"email":"schuppe.jaron@example.com",
-		// "password":"password"
-
-// {
-//     "title": "Build a Laravel Backend for HireHub App",
-//     "description": "I need an experienced backend developer to build a robust API for a freelancer marketplace. The project includes authentication, post management, and notification systems using Laravel 11.",
-//     "budget": "fixed",
-//     "price": 500.50,
-//     "deadline": "2026-05-20",
-//     "tags": [1, 5, 1]
-// }
 
